@@ -1,5 +1,8 @@
 const User = require("../models/User");
+const Role = require("../models/Role");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("../config");
 const authCtrl = {};
 
 authCtrl.signup = async (req, res) => {
@@ -22,13 +25,45 @@ authCtrl.signup = async (req, res) => {
 		password: passwordHash,
 	});
 
+	if (roles) {
+		const foundRoles = await Role.find({
+			name: { $in: roles },
+		});
+
+		newUser.roles = foundRoles.map((role) => role._id);
+	} else {
+		const role = await Role.findOne({ name: "user" });
+		newUser.roles = [role._id];
+	}
+
 	const savedUser = await newUser.save();
 
-	res.status(201).json({ message: "Signup" });
+	// Create token
+	const token = jwt.sign({ id: savedUser._id }, config.SECRET, {
+		expiresIn: 3600,
+	});
+
+	res.status(201).json({ token });
 };
 
-authCtrl.login = (req, res) => {
-	res.json({ message: "Login" });
+authCtrl.login = async (req, res) => {
+	const { email, password } = req.body;
+
+	const userFound = await User.findOne({ email }).populate("roles");
+
+	// Check if user exists
+	if (!userFound) return res.status(400).json({ message: "Wrong credentials" });
+
+	const matchPassword = await User.comparePassword(
+		password,
+		userFound.password
+	);
+
+	// Check if password is correct
+	if (!matchPassword)
+		return res.status(400).json({ message: "Wrong credentials" });
+
+	res.json({ token: "" });
 };
 
 module.exports = authCtrl;
