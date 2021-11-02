@@ -63,7 +63,17 @@ authCtrl.login = async (req, res) => {
 	if (!matchPassword)
 		return res.status(400).json({ message: "Wrong credentials" });
 
-	res.json({ token: "" });
+	const token = jwt.sign(
+		{
+			id: userFound._id,
+		},
+		config.SECRET,
+		{
+			expiresIn: 3600,
+		}
+	);
+
+	res.json({ token });
 };
 
 module.exports = authCtrl;
