@@ -2,7 +2,7 @@
 
 Products API - NodeJS and MongoDB
 
-Deploy✨ https://products-api-jwt-roles-camilog90.up.railway.app/user
+Deploy✨ https://products-api-jwt-roles-camilog90.up.railway.app/api/products
 
 ## Routes
 
