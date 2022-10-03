@@ -14,6 +14,9 @@ Deploy✨ https://products-api-jwt-roles-camilog90.up.railway.app/user
 	"imgURL": "url"
 }
 ```
+
+The registration or login token must be used to add products with an "x-access-token" header having the role of moderator.
+
 - GET PRODUCTS
 	> /api/products
 - POST PRODUCTS
