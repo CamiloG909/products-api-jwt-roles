@@ -1,5 +1,5 @@
 const config = {
-	SECRET: "products-api",
+	SECRET: process.env.SECRET,
 };
 
 module.exports = config;

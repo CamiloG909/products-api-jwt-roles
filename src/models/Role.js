@@ -6,6 +6,7 @@ const Role = new Schema(
 	},
 	{
 		versionKey: false,
+		collection: "products-api-jwt-roles__role",
 	}
 );
 

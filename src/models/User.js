@@ -25,6 +25,7 @@ const User = new Schema(
 	{
 		timestamps: true,
 		versionKey: false,
+		collection: "products-api-jwt-roles__user",
 	}
 );
 

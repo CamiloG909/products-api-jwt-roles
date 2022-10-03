@@ -18,6 +18,5 @@ app.get("/", (req, res) =>
 
 app.use(require("./routes/auth.routes"));
 app.use(require("./routes/products.routes"));
-app.use(require("./routes/user.routes"));
 
 module.exports = app;

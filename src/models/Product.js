@@ -10,6 +10,7 @@ const Product = new Schema(
 	{
 		timestamps: true,
 		versionKey: false,
+		collection: "products-api-jwt-roles__product",
 	}
 );
 
